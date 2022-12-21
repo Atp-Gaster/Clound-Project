@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+
+<body>
+    <h1>Search your Menu </h1>
+    <p>Example: Rice</p>
+<p>Search:<input type="text" id="Searching"> <input type="submit" id="Enter" onclick="getData()"> </p>
+<br>
+<p id="SearchResult"></p>
+
+</body>
+
+
+<script>       
+
+    function getData()
+    {
+        document.getElementById("SearchResult").innerHTML = ""
+        //My Key is '7849aec6069c4d648aaa9031575c3025';
+        var Keyword = document.getElementById("Searching").value 
+        console.log("Test SeachingBox: " + Keyword);
+        fetch('https://api.spoonacular.com/recipes/complexSearch?query=' + Keyword +"&apiKey=7849aec6069c4d648aaa9031575c3025" , {       
+        })
+        .then(res => res.json())
+        .then((data) => {
+            console.log(data);             
+            console.log(data.results.length);           
+            for(let nA = 0; nA < data.results.length; nA++)
+            {                
+                document.getElementById("SearchResult").innerHTML += "<li>" +data.results[nA].title + "<br>" + "<img src="+ data.results[nA].image + ">" +"</li>"+"<br>";
+            }
+        })
+       .catch((err) => console.log(err));
+    }                    
+</script>
+
+</html>
